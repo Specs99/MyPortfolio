@@ -156,9 +156,9 @@ function App() {
         </main>
 
         {/* Footer */}
-        <footer className={`py-8 text-center ${isDark ? 'text-white/90' : 'text-white/90'} bg-gradient-to-t from-[#240046]/50 to-transparent`}>
-          <p className="text-sm font-semibold">
-            Made with 💜 by <span className="text-[var(--gold)]">Mustafa Hamid (Specs)</span> | © 2024 InciVerse
+        <footer className={`py-8 text-center ${isDark ? 'bg-gradient-to-t from-[#240046]/80 to-transparent' : 'bg-gradient-to-t from-[#2C3E50]/30 to-transparent'}`}>
+          <p className={`text-sm font-semibold ${isDark ? 'text-[#f8f9fa]/90' : 'text-white/90'}`}>
+            Made with 💜 by <span className={isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}>Mustafa Hamid (Specs)</span> | © 2024 InciVerse
           </p>
         </footer>
       </div>

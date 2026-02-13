@@ -115,7 +115,7 @@ export function ProjectsSection() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6 stagger-1">
             {isDark ? <Zap className="w-4 h-4 text-[#e0aaff]" /> : <Sparkles className="w-4 h-4 text-[#FFD700]" />}
-            <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>My Creations</span>
+            <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>My Creations</span>
           </span>
           <h2 className={`text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg stagger-2 ${isDark ? 'text-[#f8f9fa]' : 'text-white'
             }`}>
@@ -252,7 +252,7 @@ export function ProjectsSection() {
             href="https://github.com/Specs99"
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full glass-card font-bold transition-all hover:scale-105 ${isDark ? 'text-[#f8f9fa] hover:bg-[#9d4edd]/30' : 'text-[#1a2634] hover:bg-white/60'
+            className={`inline-flex items-center gap-2 px-8 py-4 rounded-full glass-card font-bold transition-all hover:scale-105 ${isDark ? 'text-[#f8f9fa] hover:bg-[#9d4edd]/30' : 'text-white hover:bg-white/60'
               }`}
             onClick={() => playSound('click', 0.3)}
             onMouseEnter={() => playSound('hover', 0.2)}

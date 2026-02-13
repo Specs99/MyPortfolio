@@ -243,7 +243,7 @@ export function ContactSection() {
             className="w-24 h-24 md:w-32 md:h-32 mascot-bounce drop-shadow-lg"
           />
           <div className={`absolute -top-12 left-1/2 -translate-x-1/2 glass-card px-3 py-2 whitespace-nowrap`}>
-            <p className={`text-xs font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>Can't wait to hear from you!</p>
+            <p className={`text-xs font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>Can't wait to hear from you!</p>
           </div>
         </div>
       </div>

@@ -86,7 +86,7 @@ export function AboutSection() {
               <div
                 className={`absolute -top-4 -right-4 md:right-0 glass-card p-4 max-w-xs transition-all duration-1000 delay-500 scale-in ${isVisible ? 'visible' : ''}`}
               >
-                <p className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>
+                <p className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
                   {isDark
                     ? "I am Specs. Welcome to my domain. Power flows through code."
                     : "Hey! I'm Mustafa, but everyone calls me Specs. Welcome to my digital garden!"}
@@ -103,7 +103,7 @@ export function AboutSection() {
           >
             {/* Section Title */}
             <div className="mb-8">
-              <span className={`inline-flex items-center gap-2 px-4 py-1 rounded-full text-sm font-bold mb-4 stagger-1 ${isDark ? 'bg-[#9d4edd]/20 text-[#e0aaff]' : 'bg-[#FFD700]/20 text-[#1a2634]'
+              <span className={`inline-flex items-center gap-2 px-4 py-1 rounded-full text-sm font-bold mb-4 stagger-1 ${isDark ? 'bg-[#9d4edd]/20 text-[#e0aaff]' : 'bg-[#FFD700]/20 text-white'
                 }`}>
                 {isDark ? <Zap className="w-4 h-4 text-[#e0aaff]" /> : <Sparkles className="w-4 h-4 text-[#FFD700]" />}
                 About Me
@@ -118,14 +118,14 @@ export function AboutSection() {
 
             {/* Description */}
             <div className="glass-card p-6 mb-8 stagger-4">
-              <p className={`text-lg font-bold leading-relaxed mb-4 ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>
+              <p className={`text-lg font-bold leading-relaxed mb-4 ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
                 I'm <span className={isDark ? 'text-[#9d4edd]' : 'text-[#87CEEB]'}>Mustafa Hamid</span> (aka <span className={isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}>Specs</span>) — a passionate
                 16-year-old O-Level student with a love for building things that live on the internet.
                 As the co-founder of{' '}
                 <span className={`font-bold ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`}>InciVerse</span>, I'm on a mission to create
                 innovative digital solutions.
               </p>
-              <p className={`text-lg font-bold leading-relaxed ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>
+              <p className={`text-lg font-bold leading-relaxed ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
                 When I'm not coding, you'll find me exploring new technologies, designing beautiful interfaces,
                 or dreaming up the next big project. I believe in the power of technology to make a positive
                 impact on the world.
@@ -142,8 +142,8 @@ export function AboutSection() {
                   onMouseEnter={() => playSound('hover', 0.15)}
                 >
                   <stat.icon className={`w-6 h-6 mx-auto mb-2 ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`} />
-                  <div className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]/80' : 'text-[#1a2634]/80'}`}>{stat.label}</div>
-                  <div className={`font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>{stat.value}</div>
+                  <div className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]/80' : 'text-white/80'}`}>{stat.label}</div>
+                  <div className={`font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>{stat.value}</div>
                 </div>
               ))}
             </div>
@@ -160,7 +160,7 @@ export function AboutSection() {
                     onMouseEnter={() => playSound('hover', 0.15)}
                   >
                     <skill.icon className="w-5 h-5" style={{ color: skill.color }} />
-                    <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>{skill.label}</span>
+                    <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>{skill.label}</span>
                   </div>
                 ))}
               </div>

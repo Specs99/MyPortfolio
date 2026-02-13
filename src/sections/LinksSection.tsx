@@ -123,13 +123,13 @@ export function LinksSection() {
         >
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-6 stagger-1">
             {isDark ? <Zap className="w-4 h-4 text-[#e0aaff]" /> : <Link2 className="w-4 h-4 text-[#FFD700]" />}
-            <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>Connect With Me</span>
+            <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>Connect With Me</span>
           </span>
-          <h2 className={`text-4xl md:text-6xl font-bold mb-4 drop-shadow-md stagger-2 ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'
+          <h2 className={`text-4xl md:text-6xl font-bold mb-4 drop-shadow-md stagger-2 ${isDark ? 'text-[#f8f9fa]' : 'text-white'
             }`}>
             Let's Connect
           </h2>
-          <p className={`text-lg max-w-2xl mx-auto font-semibold stagger-3 ${isDark ? 'text-[#f8f9fa]/80' : 'text-[#1a2634]/80'
+          <p className={`text-lg max-w-2xl mx-auto font-semibold stagger-3 ${isDark ? 'text-[#f8f9fa]/80' : 'text-white/80'
             }`}>
             Find me on these platforms. I'd love to hear from you!
           </p>
@@ -191,7 +191,7 @@ export function LinksSection() {
         <div
           className={`scroll-reveal stagger-5 ${isVisible ? 'visible' : ''}`}
         >
-          <h3 className={`text-xl font-bold mb-6 text-center ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>Quick Links</h3>
+          <h3 className={`text-xl font-bold mb-6 text-center ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>Quick Links</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {projectLinks.map((link) => (
               <a

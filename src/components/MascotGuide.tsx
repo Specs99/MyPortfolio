@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 interface MascotGuideProps {
   currentSection: number;
@@ -24,6 +25,7 @@ export function MascotGuide({ currentSection }: MascotGuideProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [showMessage, setShowMessage] = useState(true);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const { isDark } = useTheme();
 
   useEffect(() => {
     // Show mascot after initial load
@@ -59,48 +61,46 @@ export function MascotGuide({ currentSection }: MascotGuideProps) {
   const position = sectionPositions[currentSection] || sectionPositions[0];
 
   return (
-    <div 
-      className={`fixed z-40 transition-all duration-500 ${
-        isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
-      }`}
+    <div
+      className={`fixed z-40 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+        }`}
       style={{
         ...position,
         position: 'fixed'
       }}
     >
       {/* Speech Bubble */}
-      <div 
-        className={`absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-48 p-3 rounded-2xl glass-card transition-all duration-500 ${
-          showMessage ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-        }`}
+      <div
+        className={`absolute bottom-full mb-4 left-1/2 -translate-x-1/2 w-48 p-3 rounded-2xl glass-card transition-all duration-500 ${showMessage ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+          }`}
       >
-        <p className="text-xs font-bold text-[#1a2634] text-center leading-relaxed">
+        <p className={`text-xs font-bold text-center leading-relaxed ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>
           {sectionMessages[currentSection]}
         </p>
-        <div 
-          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent border-t-white/60"
+        <div
+          className={`absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-8 border-r-8 border-t-8 border-transparent ${isDark ? 'border-t-[#9d4edd]/60' : 'border-t-white/60'}`}
         />
       </div>
 
       {/* Mascot Image */}
-      <div 
+      <div
         className="relative cursor-pointer hover:scale-110 transition-transform"
         onClick={() => setShowMessage(!showMessage)}
       >
-        <img 
-          src="/images/mascot-guide.png" 
+        <img
+          src="/images/mascot-guide.png"
           alt="Guide Mascot"
           className="w-16 h-16 md:w-20 md:h-20 mascot-bounce drop-shadow-lg"
         />
-        
+
         {/* Glow Effect */}
-        <div className="absolute inset-0 bg-gradient-radial from-[#FFD700]/30 via-transparent to-transparent rounded-full blur-xl -z-10" />
+        <div className={`absolute inset-0 rounded-full blur-xl -z-10 ${isDark ? 'bg-gradient-radial from-[#9d4edd]/30 via-transparent to-transparent' : 'bg-gradient-radial from-[#FFD700]/30 via-transparent to-transparent'}`} />
       </div>
 
       {/* Hint Text */}
       {!hasInteracted && (
         <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap">
-          <p className="text-xs text-white/90 font-bold animate-pulse">Click me!</p>
+          <p className={`text-xs font-bold animate-pulse ${isDark ? 'text-[#e0aaff]/90' : 'text-white/90'}`}>Click me!</p>
         </div>
       )}
     </div>

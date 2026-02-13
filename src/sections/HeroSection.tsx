@@ -120,7 +120,7 @@ export function HeroSection() {
           onMouseEnter={() => playSound('hover', 0.2)}
         >
           <Sparkles className={`w-4 h-4 ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`} />
-          <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>
+          <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
             {isDark ? 'Enter the Dungeon' : 'Welcome to my world'}
           </span>
         </div>
@@ -183,7 +183,7 @@ export function HeroSection() {
               onMouseEnter={() => playSound('hover', 0.15)}
             >
               <div className={`text-2xl font-bold drop-shadow-md ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`}>{stat.value}</div>
-              <div className={`text-sm font-semibold ${isDark ? 'text-[#f8f9fa]' : 'text-[#1a2634]'}`}>{stat.label}</div>
+              <div className={`text-sm font-semibold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>{stat.label}</div>
             </div>
           ))}
         </div>
