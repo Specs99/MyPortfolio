@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Calendar, Briefcase, Heart, Code, Lightbulb, Sparkles, Zap } from 'lucide-react';
+import { Briefcase, Code, Lightbulb, Sparkles, Zap, Palette } from 'lucide-react';
 import { useSound } from '@/hooks/useSound';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -9,7 +9,20 @@ export function AboutSection() {
   const { playSound } = useSound();
   const { isDark } = useTheme();
 
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        // Calculate how much of the section is scrolled through
+        // A value of 0 means the top of the section is at the top of the viewport
+        setScrollY(window.scrollY - sectionRef.current.offsetTop);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -21,19 +34,28 @@ export function AboutSection() {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const skills = [
     { icon: Code, label: 'Web Development', color: isDark ? '#9d4edd' : '#87CEEB' },
-    { icon: Lightbulb, label: 'Problem Solving', color: isDark ? '#e0aaff' : '#FFD700' },
-    { icon: Heart, label: 'Creative Design', color: isDark ? '#c77dff' : '#FFB7C5' },
+    { icon: Zap, label: 'Discord Specialist', color: isDark ? '#c77dff' : '#5865F2' },
+    { icon: Lightbulb, label: 'Logical Thinking', color: isDark ? '#e0aaff' : '#FFD700' },
+    { icon: Palette, label: 'Graphics Design', color: isDark ? '#FFB7C5' : '#FFB7C5' },
+    { icon: Code, label: 'Systems Logic', color: isDark ? '#98D8C8' : '#98D8C8' },
+  ];
+
+  const secondarySkills = [
+    'Python', 'C++', 'Windows Apps', 'Bot Making', 'Server Dev'
   ];
 
   const stats = [
-    { icon: Calendar, label: 'Age', value: '16 years old' },
-    { icon: MapPin, label: 'Location', value: 'Earth 🌍' },
-    { icon: Briefcase, label: 'Role', value: 'Co-founder @ InciVerse' },
+    { icon: Briefcase, label: 'Experience', value: '2 Star YouTubers' },
+    { icon: Zap, label: 'Discord', value: 'Bot & Server Pro' },
+    { icon: Code, label: 'Logic', value: 'Expert Thinker' },
   ];
 
   return (
@@ -45,10 +67,12 @@ export function AboutSection() {
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
         style={{
-          backgroundImage: isDark ? 'url(/images/dungeon-bg.jpg)' : 'url(/images/floating-island.jpg)',
-          filter: isDark ? 'brightness(0.7)' : 'brightness(1.05)'
+          backgroundImage: isDark ? 'url(/images/dungeon-about.jpg)' : 'url(/images/floating-island.jpg)',
+          filter: isDark ? 'brightness(0.7)' : 'brightness(1.05)',
+          transform: `scale(${1.1 + scrollY * 0.0002}) translateY(${scrollY * 0.1}px)`,
+          willChange: 'transform'
         }}
       />
 
@@ -119,16 +143,15 @@ export function AboutSection() {
             {/* Description */}
             <div className="glass-card p-6 mb-8 stagger-4">
               <p className={`text-lg font-bold leading-relaxed mb-4 ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
-                I'm <span className={isDark ? 'text-[#9d4edd]' : 'text-[#87CEEB]'}>Mustafa Hamid</span> (aka <span className={isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}>Specs</span>) — a passionate
-                16-year-old O-Level student with a love for building things that live on the internet.
-                As the co-founder of{' '}
-                <span className={`font-bold ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`}>InciVerse</span>, I'm on a mission to create
-                innovative digital solutions.
+                I'm <span className={isDark ? 'text-[#9d4edd]' : 'text-[#87CEEB]'}>Mustafa Hamid</span> (aka <span className={isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}>Specs</span>) — a
+                16-year-old developer and Co-founder of <span className={`font-bold ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`}>InciVerse</span>.
+                I specialize in building complex high-performance systems, managing large-scale communities, and creating custom solutions as a seasoned <span className="text-[#5865F2]">Discord Server Developer</span> and
+                expert <span className="text-[#5865F2]">Bot Maker</span>.
               </p>
               <p className={`text-lg font-bold leading-relaxed ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>
-                When I'm not coding, you'll find me exploring new technologies, designing beautiful interfaces,
-                or dreaming up the next big project. I believe in the power of technology to make a positive
-                impact on the world.
+                Beyond the web, I'm an expert in <span className="text-[#9d4edd]">Logical Thinking</span>, a Windows application maker,
+                and highly skilled in <span className="text-[#3776AB]">Python</span>, <span className="text-[#00599C]">C++</span>, and
+                <span className="text-[#FFB7C5]">Graphics Design</span>. I'm a massive <span className="italic">PC, Game, and Anime lover</span>.
               </p>
             </div>
 
@@ -151,7 +174,7 @@ export function AboutSection() {
             {/* Skills */}
             <div>
               <h3 className={`text-lg font-bold mb-4 drop-shadow-md ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>My Superpowers</h3>
-              <div className="flex flex-wrap gap-3">
+              <div className="flex flex-wrap gap-3 mb-6">
                 {skills.map((skill, i) => (
                   <div
                     key={i}
@@ -162,6 +185,17 @@ export function AboutSection() {
                     <skill.icon className="w-5 h-5" style={{ color: skill.color }} />
                     <span className={`text-sm font-bold ${isDark ? 'text-[#f8f9fa]' : 'text-white'}`}>{skill.label}</span>
                   </div>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {secondarySkills.map((skill, i) => (
+                  <span
+                    key={i}
+                    className={`text-xs font-bold px-3 py-1 rounded-md border ${isDark ? 'border-[#9d4edd]/30 text-[#e0aaff]/70' : 'border-[#1a2634]/20 text-[#1a2634]/60'}`}
+                  >
+                    {skill}
+                  </span>
                 ))}
               </div>
             </div>

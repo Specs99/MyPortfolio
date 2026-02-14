@@ -55,7 +55,16 @@ export function LinksSection() {
   const { playSound } = useSound();
   const { isDark } = useTheme();
 
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        setScrollY(window.scrollY - sectionRef.current.offsetTop);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -67,7 +76,10 @@ export function LinksSection() {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -78,8 +90,20 @@ export function LinksSection() {
       style={{ minHeight: '100vh', paddingTop: '80px', paddingBottom: '80px' }}
     >
       {/* Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
+        style={{
+          backgroundImage: isDark ? 'url(/images/dungeon-links.jpg)' : 'none',
+          backgroundColor: isDark ? '#240046' : '#87CEEB',
+          filter: isDark ? 'brightness(0.6)' : 'none',
+          transform: isDark ? `scale(${1.1 + scrollY * 0.00015}) translateY(${scrollY * 0.08}px)` : 'none',
+          willChange: 'transform'
+        }}
+      />
+
+      {/* Gradient Overlay */}
       <div className={`absolute inset-0 transition-all duration-700 ${isDark
-        ? 'bg-gradient-to-b from-[#240046] via-[#3c096c] to-[#240046]'
+        ? 'bg-gradient-to-b from-[#240046]/60 via-[#3c096c]/40 to-[#240046]/70'
         : 'bg-gradient-to-b from-[#A8D5E5] via-[#87CEEB] to-[#E6F3F8]'
         }`} />
 
@@ -96,7 +120,9 @@ export function LinksSection() {
                   top: `${10 + Math.random() * 80}%`,
                   left: `${5 + Math.random() * 90}%`,
                   animationDelay: `${Math.random() * 3}s`,
-                  animationDuration: `${3 + Math.random() * 2}s`
+                  animationDuration: `${3 + Math.random() * 2}s`,
+                  transform: `translateY(${scrollY * (0.1 + i * 0.05)}px)`,
+                  willChange: 'transform'
                 }}
               />
             ))}
@@ -106,9 +132,23 @@ export function LinksSection() {
           <>
             <div
               className="absolute top-20 -left-32 w-96 h-48 opacity-30"
-              style={{ animation: 'cloudDrift 35s linear infinite' }}
+              style={{
+                animation: 'cloudDrift 35s linear infinite',
+                transform: `translateX(${scrollY * 0.1}px) translateY(${scrollY * 0.05}px)`,
+                willChange: 'transform'
+              }}
             >
               <div className="w-full h-full bg-white/50 rounded-full blur-3xl" />
+            </div>
+            <div
+              className="absolute bottom-40 -right-32 w-80 h-40 opacity-20"
+              style={{
+                animation: 'cloudDrift 45s linear infinite reverse',
+                transform: `translateX(${scrollY * -0.05}px) translateY(${scrollY * 0.08}px)`,
+                willChange: 'transform'
+              }}
+            >
+              <div className="w-full h-full bg-white/40 rounded-full blur-3xl" />
             </div>
           </>
         )}

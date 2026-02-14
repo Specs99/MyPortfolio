@@ -3,15 +3,15 @@ import { Play, Pause, SkipForward, Volume2, VolumeX, Music } from 'lucide-react'
 import './MusicPlayer.css';
 
 const playlist = [
-    'Forest of Little Wonders.mp3',
-    'Skybound Overture (1).mp3',
-    'Skybound Overture (2).mp3',
-    'Skybound Overture.mp3',
-    'Skyward Promis.mp3',
-    'Skyward Promise (1).mp3',
-    'Skyward Promise.mp3',
-    'Skyward.mp3',
-    'Untitled (4).mp3'
+    'Forest of Little Wonders by Specs .mp3',
+    'Skybound Over by Specs .mp3',
+    'Skybound Overture by Specs .mp3',
+    'Skybound Unique by Specs (2).mp3',
+    'Skyward Promise V2 by Specs.mp3',
+    'Skyward Promise by Specs.mp3',
+    'Skyward Stealth by Specs.mp3',
+    'Skyward by Specs.mp3',
+    'Unaware by Specs.mp3'
 ];
 
 export const MusicPlayer: React.FC = () => {
@@ -26,65 +26,73 @@ export const MusicPlayer: React.FC = () => {
 
     const audioRef = useRef<HTMLAudioElement | null>(null);
 
+    // Initialize audio instance
     useEffect(() => {
-        // Audio instance initialization
-        audioRef.current = new Audio(`/music/${playlist[currentTrackIndex]}`);
-        audioRef.current.volume = isMuted ? 0 : volume;
+        if (!audioRef.current) {
+            audioRef.current = new Audio();
 
-        const handleEnded = () => {
-            skipToNext();
-        };
+            const handleEnded = () => {
+                skipToNext();
+            };
 
-        audioRef.current.addEventListener('ended', handleEnded);
+            audioRef.current.addEventListener('ended', handleEnded);
 
-        return () => {
-            if (audioRef.current) {
-                audioRef.current.pause();
-                audioRef.current.removeEventListener('ended', handleEnded);
-                audioRef.current = null;
-            }
-        };
+            return () => {
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current.removeEventListener('ended', handleEnded);
+                    audioRef.current = null;
+                }
+            };
+        }
     }, []);
 
+    // Handle track change
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.src = `/music/${playlist[currentTrackIndex]}`;
+            audioRef.current.load(); // Ensure the new source is loaded
             if (isPlaying) {
-                audioRef.current.play().catch((e: Error) => console.log("Autoplay blocked or error:", e));
+                audioRef.current.play().catch((e: Error) => {
+                    console.log("Play blocked by browser, waiting for interaction", e);
+                });
             }
         }
     }, [currentTrackIndex]);
 
+    // Handle Play/Pause
     useEffect(() => {
         if (audioRef.current) {
             if (isPlaying) {
-                audioRef.current.play().catch((e: Error) => console.log("Play failed:", e));
+                audioRef.current.play().catch((e: Error) => {
+                    console.log("Play failed, waiting for interaction:", e);
+                });
             } else {
                 audioRef.current.pause();
             }
         }
     }, [isPlaying]);
 
+    // Autoplay policy bypass: Resume on any interaction
     useEffect(() => {
-        const resumeAudio = () => {
+        const handleInteraction = () => {
             if (isPlaying && audioRef.current && audioRef.current.paused) {
-                audioRef.current.play().catch(e => console.log("Still blocked:", e));
+                audioRef.current.play().catch(() => { });
             }
-            window.removeEventListener('click', resumeAudio);
-            window.removeEventListener('touchstart', resumeAudio);
         };
 
-        if (isPlaying) {
-            window.addEventListener('click', resumeAudio);
-            window.addEventListener('touchstart', resumeAudio);
-        }
+        window.addEventListener('click', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction);
+        window.addEventListener('keydown', handleInteraction);
 
         return () => {
-            window.removeEventListener('click', resumeAudio);
-            window.removeEventListener('touchstart', resumeAudio);
+            window.removeEventListener('click', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
+            window.removeEventListener('keydown', handleInteraction);
         };
     }, [isPlaying]);
 
+    // Handle Volume/Mute
     useEffect(() => {
         if (audioRef.current) {
             audioRef.current.volume = isMuted ? 0 : volume;
@@ -107,7 +115,11 @@ export const MusicPlayer: React.FC = () => {
     const toggleMute = () => setIsMuted(!isMuted);
 
     const cleanTrackName = (name: string) => {
-        return name.replace('.mp3', '').replace(/\(\d+\)/, '').trim();
+        return name
+            .replace('.mp3', '')
+            .replace(/\bby Specs\b/gi, '')
+            .replace(/\(\d+\)/, '')
+            .trim();
     };
 
     return (

@@ -9,7 +9,14 @@ export function HeroSection() {
   const { playSound } = useSound();
   const { isDark } = useTheme();
 
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -17,7 +24,10 @@ export function HeroSection() {
       { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const scrollToNext = () => {
@@ -37,10 +47,12 @@ export function HeroSection() {
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
         style={{
-          backgroundImage: isDark ? 'url(/images/dungeon-bg.jpg)' : 'url(/images/hero-sky.jpg)',
-          filter: isDark ? 'brightness(0.8)' : 'brightness(1.1)'
+          backgroundImage: isDark ? 'url(/images/dungeon-hero.jpg)' : 'url(/images/hero-sky.jpg)',
+          filter: isDark ? 'brightness(0.8)' : 'brightness(1.1)',
+          transform: `scale(${1 + scrollY * 0.0005}) translateY(${scrollY * 0.2}px)`,
+          willChange: 'transform'
         }}
       />
 
@@ -149,7 +161,7 @@ export function HeroSection() {
             textShadow: isDark ? '0 2px 10px rgba(157,78,221,0.5)' : '0 2px 10px rgba(255,215,0,0.4)'
           }}
         >
-          16-year-old O-Level Student & Co-founder of{' '}
+          Co-founder of{' '}
           <span className={`font-bold glow-text ${isDark ? 'text-[#e0aaff]' : 'text-[#FFD700]'}`}>InciVerse</span>
         </p>
 

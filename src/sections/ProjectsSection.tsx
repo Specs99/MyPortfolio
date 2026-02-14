@@ -69,7 +69,16 @@ export function ProjectsSection() {
   const { playSound } = useSound();
   const { isDark } = useTheme();
 
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        setScrollY(window.scrollY - sectionRef.current.offsetTop);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -81,7 +90,10 @@ export function ProjectsSection() {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -93,10 +105,12 @@ export function ProjectsSection() {
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
         style={{
-          backgroundImage: isDark ? 'url(/images/dungeon-bg.jpg)' : 'url(/images/waterfall-scene.jpg)',
-          filter: isDark ? 'brightness(0.7)' : 'brightness(1.02)'
+          backgroundImage: isDark ? 'url(/images/dungeon-projects.jpg)' : 'url(/images/waterfall-scene.jpg)',
+          filter: isDark ? 'brightness(0.7)' : 'brightness(1.02)',
+          transform: `scale(${1.1 + scrollY * 0.00015}) translateY(${scrollY * 0.12}px)`,
+          willChange: 'transform'
         }}
       />
 

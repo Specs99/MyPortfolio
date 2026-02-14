@@ -19,7 +19,16 @@ export function ContactSection() {
     message: ''
   });
 
+  const [scrollY, setScrollY] = useState(0);
+
   useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        setScrollY(window.scrollY - sectionRef.current.offsetTop);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
@@ -31,7 +40,10 @@ export function ContactSection() {
       observer.observe(sectionRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -61,10 +73,12 @@ export function ContactSection() {
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-opacity duration-700"
         style={{
-          backgroundImage: isDark ? 'url(/images/dungeon-bg.jpg)' : 'url(/images/shrine-gate.jpg)',
-          filter: isDark ? 'brightness(0.6)' : 'brightness(0.9)'
+          backgroundImage: isDark ? 'url(/images/dungeon-contact.jpg)' : 'url(/images/shrine-gate.jpg)',
+          filter: isDark ? 'brightness(0.6)' : 'brightness(0.9)',
+          transform: `scale(${1.1 + scrollY * 0.00015}) translateY(${scrollY * 0.1}px)`,
+          willChange: 'transform'
         }}
       />
 

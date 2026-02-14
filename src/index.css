@@ -594,6 +594,43 @@
   }
 
   /* Shimmer Effect */
+  .animate-shimmer {
+    animation: shimmer-effect 2s linear infinite;
+  }
+
+  @keyframes shimmer-effect {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Spin Reverse */
+  .animate-spin-reverse {
+    animation: spin-reverse 3s linear infinite;
+  }
+
+  @keyframes spin-reverse {
+    from {
+      transform: rotate(360deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+
+  /* Soft Float for Characters */
+  @keyframes soft-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .animate-soft-float {
+    animation: soft-float 4s ease-in-out infinite;
+  }
+
+  /* Shimmer Effect */
   .shimmer {
     background: linear-gradient(90deg,
         rgba(255, 255, 255, 0) 0%,
