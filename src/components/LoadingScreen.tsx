@@ -7,19 +7,53 @@ export function LoadingScreen() {
   const { isDark } = useTheme();
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setTimeout(() => setIsExiting(true), 600);
-          return 100;
-        }
-        const jump = Math.random() < 0.2 ? 12 : 5;
-        return prev + jump;
-      });
-    }, 120);
+    const imagesToPreload = [
+      // Character Images
+      '/images/character-hoodie.png',
+      '/images/character-sigma.png',
+      '/images/character-specs.png',
+      '/images/character-zayan.png',
+      '/images/mascot-guide.png',
+      // Backgrounds (Preload both sets for instant theme switching)
+      '/images/dungeon-hero.jpg',
+      '/images/hero-sky.jpg',
+      '/images/dungeon-about.jpg',
+      '/images/floating-island.jpg',
+      '/images/dungeon-projects.jpg',
+      '/images/waterfall-scene.jpg',
+      '/images/dungeon-links.jpg',
+      '/images/dungeon-contact.jpg',
+      '/images/shrine-gate.jpg'
+    ];
 
-    return () => clearInterval(interval);
+    let loadedCount = 0;
+    const totalImages = imagesToPreload.length;
+
+    // Minimum load time for branding/intro feel
+    const minTimePromise = new Promise(resolve => setTimeout(resolve, 2000));
+
+    const loadImages = imagesToPreload.map(src => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          loadedCount++;
+          setProgress(Math.floor((loadedCount / totalImages) * 100));
+          resolve(src);
+        };
+        img.onerror = () => {
+          loadedCount++; // Count even on error to not block forever
+          setProgress(Math.floor((loadedCount / totalImages) * 100));
+          resolve(src);
+        };
+      });
+    });
+
+    Promise.all([...loadImages, minTimePromise]).then(() => {
+      setProgress(100);
+      setTimeout(() => setIsExiting(true), 800);
+    });
+
   }, []);
 
   return (
