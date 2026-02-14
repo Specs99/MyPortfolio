@@ -9,7 +9,6 @@ export function LoadingScreen() {
   useEffect(() => {
     const imagesToPreload = [
       // Character Images
-      '/images/character-hoodie.png',
       '/images/character-sigma.png',
       '/images/character-specs.png',
       '/images/character-zayan.png',
@@ -86,7 +85,7 @@ export function LoadingScreen() {
 
             <div className="relative z-10">
               <img
-                src="/images/character-hoodie.png"
+                src="/images/character-specs.png"
                 alt="Specs"
                 className="w-24 h-24 object-contain animate-soft-float"
               />
