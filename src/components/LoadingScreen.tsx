@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 
 export function LoadingScreen() {
-  const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
-  const { isDark } = useTheme();
 
   useEffect(() => {
-    // Fallback: If video doesn't trigger onEnded for any reason, hide after 10 seconds
-    const timeout = setTimeout(() => setIsExiting(true), 10000);
+    // Fallback: If video doesn't trigger onEnded for any reason, hide after 5 seconds
+    const timeout = setTimeout(() => setIsExiting(true), 5000);
     return () => clearTimeout(timeout);
   }, []);
 

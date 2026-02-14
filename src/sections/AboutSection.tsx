@@ -14,7 +14,6 @@ export function AboutSection() {
   useEffect(() => {
     const handleScroll = () => {
       if (sectionRef.current) {
-        const rect = sectionRef.current.getBoundingClientRect();
         // Calculate how much of the section is scrolled through
         // A value of 0 means the top of the section is at the top of the viewport
         setScrollY(window.scrollY - sectionRef.current.offsetTop);
