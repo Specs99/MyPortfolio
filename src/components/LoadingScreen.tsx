@@ -5,8 +5,8 @@ export function LoadingScreen() {
   const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    // Fallback: If video doesn't trigger onEnded for any reason, hide after 5 seconds
-    const timeout = setTimeout(() => setIsExiting(true), 5000);
+    // Fallback: Keep the screen for at least 30s as safety, but let onEnded handle the clean exit
+    const timeout = setTimeout(() => setIsExiting(true), 30000);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -22,7 +22,6 @@ export function LoadingScreen() {
         onEnded={() => setIsExiting(true)}
         className="w-full h-full object-cover"
       >
-        <source src="/videos/loading-video.mp4" type="video/source" />
         <source src="/videos/loading-video.mp4" type="video/mp4" />
       </video>
 
