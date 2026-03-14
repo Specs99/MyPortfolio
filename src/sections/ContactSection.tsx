@@ -236,14 +236,14 @@ export function ContactSection() {
         >
           <p className={`mb-4 font-semibold ${isDark ? 'text-[#f8f9fa]/80' : 'text-white/80'}`}>Or reach me directly at</p>
           <a
-            href="mailto:kingm172009@gmail.com"
+            href="mailto:mustafahamid200917@gmail.com"
             className={`inline-flex items-center gap-2 px-6 py-3 rounded-full glass-card transition-all hover:scale-105 ${isDark ? 'text-[#f8f9fa] hover:bg-[#9d4edd]/30' : 'text-white hover:bg-white/30'
               }`}
             onMouseEnter={() => playSound('hover', 0.2)}
             onClick={() => playSound('click', 0.3)}
           >
             <Mail className="w-5 h-5" />
-            kingm172009@gmail.com
+            mustafahamid200917@gmail.com
           </a>
         </div>
 
